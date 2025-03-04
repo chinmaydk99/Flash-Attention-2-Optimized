@@ -1,23 +1,24 @@
 # Flash-Attention-2-Optimized
 
-Overview
+### Overview
 This repository contains an implementation of a Triton-based Flash Attention operation for efficient sequence processing in deep learning models. The implementation leverages Triton's JIT compilation and optimized memory access patterns to accelerate attention computation while maintaining precision.
 
-Features
+### Features
 Efficient attention computation using block-wise processing and softmax scaling.
 Causal and non-causal attention support.
 Optimized GPU memory access to reduce latency.
 Custom Triton kernel to speed up matrix multiplications for QK^T and softmax.
-Dependencies
+
+### Dependencies
 To run this implementation, install the following:
 
 Python 3.8+
 PyTorch (CUDA-enabled)
 Triton (pip install triton)
-File Structure
-triton_attention.py: Contains the Triton kernel and the main attention computation.
-test_attention.py: Includes unit tests to validate the implementation against a reference PyTorch implementation.
-How It Works
+
+
+
+### How It Works
 1. Triton Kernel (_attn_fwd)
 This function computes the scaled dot-product attention using block-wise matrix multiplications and a custom softmax computation. The logic:
 
@@ -32,6 +33,7 @@ The kernel efficiently processes attention by:
 Splitting into stages to handle causal attention masks.
 Using Triton’s matrix tiling and block-wise operations to optimize memory movement.
 Keeping frequently used data in shared memory (SRAM).
+
 2. Autograd Function (TritonAttention)
 This class provides:
 
@@ -66,7 +68,7 @@ Reduced redundant computation (logsumexp trick)
 Parallelized computation across heads & sequences
 For large sequence lengths (≥512), this optimization is substantially faster than standard attention.
 
-Next Steps
+### Next Steps
 Implement Backward Pass for full gradient support.
 Optimize Triton tiling further for larger sequence lengths.
 Extend to multi-query attention variants.
